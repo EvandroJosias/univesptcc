@@ -1,0 +1,24 @@
+# sc stands for ServiceNow compliance
+#version: "3"
+
+services:
+
+  app:
+    build:
+      dockerfile: docker/image.dockerfile
+      context: .
+    image: univesp_tcc
+    container_name: univesp_tcc
+    volumes:
+      - "./:/app/"
+    command: python ./src/main.py
+    ports:
+      - "8080:8080"
+    env_file:
+      - environment
+    networks:
+      - net_work
+
+networks:  # Lists all intranet (container context) networks
+  net_work:  # Intranet (container context) network name
+    driver: bridge  # Network driver type
