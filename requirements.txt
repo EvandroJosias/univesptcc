@@ -1,6 +1,5 @@
 flask
 flask_sqlalchemy
-sqlite3
 
 sqlalchemy
 SQLAlchemy-Utils
