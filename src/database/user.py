@@ -1,4 +1,4 @@
-import db from main
+import db from model
 
 class User( db.Model ):
     id = db.Column(db.Integer, primary_key=True)
