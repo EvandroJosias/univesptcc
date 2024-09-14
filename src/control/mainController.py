@@ -19,10 +19,11 @@ class MainController():
     def login(self):
         if request.method == 'POST':
             usuario = request.form['usuario']
-            password = request.form['password']
+            senha = request.form['password']
             logging.warning(usuario)
-            logging.warning(password)
-            resp = User.query.filter_by(username="'"+usuario+"'", password="'"+password+"'")
+            logging.warning(senha)
+            #resp = User.query.filter_by(username="'"+usuario+"'", password="'"+password+"'")
+            resp = User.query.filter_by(username=usuario, password=senha)
             logging.warning(resp)            
         return render_template('login.html')
 
