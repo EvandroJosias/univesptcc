@@ -6,7 +6,7 @@
 <form method="post">
     <div class="form-group">
         <label for="title">Usuario</label>
-        <input type="text" name="title"
+        <input type="text" name="usuario"
                placeholder="Usuário" class="form-control"
                value="{{ request.form['title'] }}"></input>
     </div>
@@ -19,6 +19,7 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Confirma</button>
+        <button type="submit" class="btn btn-primary">Criar Novo Usuario</button>
     </div>
 </form>
 {% endblock %}

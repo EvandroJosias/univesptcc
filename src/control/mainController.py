@@ -1,5 +1,8 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, request
 from src import app, logado
+from src.database.user import User
+
+import logging
 
 
 class MainController():
@@ -12,10 +15,17 @@ class MainController():
             return render_template('index.html')
         else:
             return redirect('login')
-        
+
     def login(self):
+        if request.method == 'POST':
+            usuario = request.form['usuario']
+            password = request.form['password']
+            logging.warning(usuario)
+            logging.warning(password)
+            resp = User.query.filter_by(username="'"+usuario+"'", password="'"+password+"'")
+            logging.warning(resp)            
         return render_template('login.html')
 
     def setEndpoints(self) -> None:
         app.add_url_rule('/', view_func=self.main, methods=['GET'])
-        app.add_url_rule('/login', view_func=self.login, methods=['GET','POST'])
+        app.add_url_rule('/login', view_func=self.login, methods=['GET', 'POST' ])
