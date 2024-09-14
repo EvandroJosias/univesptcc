@@ -11,7 +11,7 @@ services:
     container_name: univesp_tcc
     volumes:
       - "./:/app/"
-    command: python ./src/main.py
+    command: python app.py
     ports:
       - "8080:8080"
     env_file:

@@ -1,15 +1,17 @@
 from flask import request, jsonify
-from main import app
 from database.model import db
 from database.user import User 
 
 from authentication import *
 
+from src import app
 import datetime
+import logging
 
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+    logging.warning( data )
     new_user = User(username=data['username'], password=data['password'])
     db.session.add(new_user)
     db.session.commit()
