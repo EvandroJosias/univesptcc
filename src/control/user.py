@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from database.model import db
 from database.user import User 
 
 from authentication import *

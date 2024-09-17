@@ -1,7 +1,5 @@
 flask
 flask_sqlalchemy
-flask_migrate
-logging
 sqlalchemy
-SQLAlchemy-Utils
+#logging
 pytest
