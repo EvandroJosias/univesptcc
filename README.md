@@ -9,4 +9,4 @@ http://127.0.0.1:8080/test
 ## Exemplos do registro
 
 ### registra usuario
-curl -H "Content-Type: application/json" -X POST vostro:8080/register -d '{"username":"evandro", "email":"teste@teste.org", "password":"123456"}' 
+curl -H "Content-Type: application/json" -X POST localhost:8080/userregister -d '{"username":"evandro", "email":"teste@teste.org", "password":"123456"}' 

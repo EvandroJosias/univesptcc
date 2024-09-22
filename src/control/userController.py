@@ -1,37 +1,77 @@
-from flask import request
-from src import app
+from flask import request, jsonify
+from werkzeug.security import generate_password_hash
+from datetime import datetime
 
+from src.database.user import User 
+from src.utils.authenticate import generate_jwt
+from src import app, db
+
+import logging
+import os
 
 class UserController():
-    def __init__(self) -> None:
+    def __init__(self) -> None:        
         self.setEndpoints()
 
-    def test(self):
-        return "Testing subroute... OK!"
+    def create(self):
+        data = request.get_json()
+        #logging.warning( data )
+        new_user = User(username=data['username'], password=generate_password_hash(data['password']), email=data['email']) 
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User created successfully'}), 201
 
-    def test_body(self):
-        return f"Testing body received: {request.data}"
+    def read(self):
+        data = request.get_json()
+        user = User.query.filter_by(username=data['username']).first()        
+        if user:
+            return jsonify(user.to_dict())
+        else:
+            return jsonify({'error': 'User not found'}), 404
+
+    def readall(self):
+        users = User.query.all()  # Consulta todos os usuários
+        return jsonify([user.to_dict() for user in users])  # Retorna todos os usuários como uma lista de dicionários
+            
+    def update(self, user_id):
+        data = request.get_json()
+        user = User.query.get(user_id)
+        if user:
+            user.username = data.get('username', user.username)
+            user.email = data.get('email', user.email)
+            if 'password' in data:
+                user.password = generate_password_hash(data['password'])
+            db.session.commit()
+            return jsonify({'message': 'User updated successfully'}), 200
+        else:
+            return jsonify({'error': 'User not found'}), 404
+
+    def delete(self, user_id):
+        user = User.query.get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return jsonify({'message': 'User deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'User not found'}), 404     
+
+    def login():
+        data = request.get_json()
+        user = User.query.filter_by(username=data['username'], password=data['password']).first()
+        if user:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=int(os.environ['TIME_LIFE'])),
+                'iat': datetime.datetime.utcnow(),
+                "sub": user.id
+            }
+            token = generate_jwt(payload)
+            return jsonify({"token": token}),  200
+        return jsonify({'message':"Invalid username or password"}), 401           
     
-    def test_body_json(self):
-        """
-        Expects a Content-Type json header 
-        """
-        return f"Testing body received: {request.json}"
-
-    @app.route('/testWithAnnotation')
-    def testWithAnnotation():
-        return "Testing annotation... OK!"
-
-    def testWithArgs(name):
-        name = request.args.get('name')
-        return f'Name: {name}'
-
-    def testWithData(self, title):
-        return f'Data: {title}'
-
     def setEndpoints(self) -> None:
-        app.add_url_rule('/test', view_func=self.test, methods=['GET'])
-        app.add_url_rule('/test', view_func=self.test_body, methods=['POST'])
-        app.add_url_rule('/test-json', view_func=self.test_body_json, methods=['POST'])
-        app.add_url_rule('/test-args', view_func=self.testWithArgs, methods=['GET'])
-        app.add_url_rule('/test/<string:title>', view_func=self.testWithData, methods=['GET'])
+        app.add_url_rule('/api/userregister', view_func=self.create, methods=['POST'])
+        app.add_url_rule('/api/userbyname', view_func=self.read, methods=['GET'])
+        app.add_url_rule('/api/allusers', view_func=self.readall, methods=['GET'])
+        app.add_url_rule('/api/user/<int:user_id>', view_func=self.update, methods=['PUT'])
+        app.add_url_rule('/api/user/<int:user_id>', view_func=self.delete, methods=['DELETE'])
+        app.add_url_rule('/api/login', view_func=self.login, methods=['POST'])        

@@ -1,16 +1,7 @@
 from flask import render_template, redirect, request
+from werkzeug.security import generate_password_hash, check_password_hash
 from src import app, logado
 from src.database.user import User
-from src.database.cnae import Cnae
-from src.database.empresa import Empresa
-from src.database.estabele import Estabele
-from src.database.motivosit import MotivoSit
-from src.database.municipio import Municipio
-from src.database.natju import NatJu
-from src.database.pais import Pais
-from src.database.quals import Quals
-from src.database.simples import Simples
-from src.database.socio import Socio
 
 import logging
 
@@ -30,11 +21,17 @@ class MainController():
         if request.method == 'POST':
             usuario = request.form['usuario']
             senha = request.form['password']
-            logging.warning(usuario)
-            logging.warning(senha)
-            #resp = User.query.filter_by(username="'"+usuario+"'", password="'"+password+"'")
-            resp = User.query.filter_by(username=usuario, password=senha)
-            logging.warning(resp)            
+       
+            # Busca o usuário pela username
+            user = User.query.filter_by(username=usuario).first()
+        
+            # Verifica se o usuário existe e a senha está correta
+            if user and check_password_hash(user.password, senha):
+                # Senha correta, prossiga com o login
+                # (Adicione aqui sua lógica de autenticação)
+                return "Login bem-sucedido!"
+            else:
+                return "Usuário ou senha incorretos."
         return render_template('login.html')
 
     def setEndpoints(self) -> None:

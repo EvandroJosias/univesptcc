@@ -1,13 +1,12 @@
-from .. import Base, engine
+from .. import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.sql import func
 
 from datetime import datetime
-from sqlalchemy import inspect
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'users'
 
     ## Auto generated field
@@ -21,3 +20,13 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'created': self.created.isoformat(),
+            'updated': self.updated.isoformat(),            
+            'username': self.username,
+            'email': self.email,
+            'password': self.password
+        }
