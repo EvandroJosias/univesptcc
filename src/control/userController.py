@@ -6,8 +6,10 @@ from src.database.user import User
 from src.utils.authenticate import generate_jwt
 from src import app, db
 
+
 import logging
 import os
+
 
 class UserController():
     def __init__(self) -> None:        
@@ -55,7 +57,7 @@ class UserController():
         else:
             return jsonify({'error': 'User not found'}), 404     
 
-    def login():
+    def userlogin():
         data = request.get_json()
         user = User.query.filter_by(username=data['username'], password=data['password']).first()
         if user:
@@ -66,7 +68,7 @@ class UserController():
             }
             token = generate_jwt(payload)
             return jsonify({"token": token}),  200
-        return jsonify({'message':"Invalid username or password"}), 401           
+        return jsonify({"message":"Invalid username or password"}), 401           
     
     def setEndpoints(self) -> None:
         app.add_url_rule('/api/userregister', view_func=self.create, methods=['POST'])
@@ -74,4 +76,4 @@ class UserController():
         app.add_url_rule('/api/allusers', view_func=self.readall, methods=['GET'])
         app.add_url_rule('/api/user/<int:user_id>', view_func=self.update, methods=['PUT'])
         app.add_url_rule('/api/user/<int:user_id>', view_func=self.delete, methods=['DELETE'])
-        app.add_url_rule('/api/login', view_func=self.login, methods=['POST'])        
+        app.add_url_rule('/api/login', view_func=self.userlogin, methods=['POST'])        
