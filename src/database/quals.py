@@ -1,11 +1,11 @@
-from .. import Base
+from .. import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, Float, String, DateTime
 from sqlalchemy.sql import func
 
 from datetime import datetime
 
-class Quals(Base):
+class Quals(db.Model):
     __tablename__ = 'quals'
 
     ## Auto generated field

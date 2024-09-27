@@ -1,11 +1,11 @@
-from .. import Base
+from .. import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, Float, String, DateTime
 from sqlalchemy.sql import func
 
 from datetime import datetime
 
-class NatJu(Base):
+class NatJu(db.Model):
     __tablename__ = 'natju'
 
     ## Auto generated field

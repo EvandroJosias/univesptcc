@@ -4,3 +4,4 @@ sqlalchemy
 #logging
 pytest
 pyjwt
+requests

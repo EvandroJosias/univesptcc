@@ -1,13 +1,12 @@
 from flask import request, jsonify
-from werkzeug.security import generate_password_hash
-from datetime import datetime
+#from werkzeug.security import generate_password_hash
+from datetime import datetime, timedelta
 
 from src.database.user import User 
-from src.utils.authenticate import generate_jwt
+from src.utils.authenticate import generate_jwt, generate_password_hash
 from src import app, db
 
 
-import logging
 import os
 
 
@@ -17,8 +16,8 @@ class UserController():
 
     def create(self):
         data = request.get_json()
-        #logging.warning( data )
-        new_user = User(username=data['username'], password=generate_password_hash(data['password']), email=data['email']) 
+        passwd = generate_password_hash(data['password'])
+        new_user = User(username=data['username'], password=passwd, email=data['email']) 
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User created successfully'}), 201
@@ -42,13 +41,15 @@ class UserController():
             user.username = data.get('username', user.username)
             user.email = data.get('email', user.email)
             if 'password' in data:
-                user.password = generate_password_hash(data['password'])
+                passwd = generate_password_hash(data['password'])
+                user.password = passwd
             db.session.commit()
             return jsonify({'message': 'User updated successfully'}), 200
         else:
             return jsonify({'error': 'User not found'}), 404
 
     def delete(self, user_id):
+        data = request.get_json()
         user = User.query.get(user_id)
         if user:
             db.session.delete(user)
@@ -57,18 +58,20 @@ class UserController():
         else:
             return jsonify({'error': 'User not found'}), 404     
 
-    def userlogin():
+    def userlogin(self):
         data = request.get_json()
-        user = User.query.filter_by(username=data['username'], password=data['password']).first()
+        passwd = generate_password_hash(data['password'])      
+        print("dentro do userLogin")
+        user = User.query.filter_by( username=data['username'], password=passwd ).first()
         if user:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=int(os.environ['TIME_LIFE'])),
-                'iat': datetime.datetime.utcnow(),
+                'exp': datetime.utcnow() + timedelta(minutes=int(os.environ['TIME_LIFE'])),
+                'iat': datetime.utcnow(),
                 "sub": user.id
             }
             token = generate_jwt(payload)
             return jsonify({"token": token}),  200
-        return jsonify({"message":"Invalid username or password"}), 401           
+        return jsonify({"message":"Invalid username or password"}), 401
     
     def setEndpoints(self) -> None:
         app.add_url_rule('/api/userregister', view_func=self.create, methods=['POST'])

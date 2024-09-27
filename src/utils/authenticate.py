@@ -1,6 +1,18 @@
 import jwt
 import os
+import logging
 
+
+def check_password_hash( passwd1, passwd2 ):
+    if passwd1 == passwd2:
+        return True
+    else:
+        return False
+
+
+def generate_password_hash( passwd ):
+    logging.warning(passwd)      
+    return passwd
 
 def generate_jwt(payload):
     token = jwt.encode(payload, os.environ['SECRET_KEY'] , algorithm=os.environ['ALGORITHM'] )
