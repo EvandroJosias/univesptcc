@@ -5,3 +5,6 @@ sqlalchemy
 pytest
 pyjwt
 requests
+bs4
+tdqm
+dask[dataframe]

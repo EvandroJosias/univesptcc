@@ -1,5 +1,6 @@
 from .. import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.inspection import inspect
 from sqlalchemy import Integer, Float, String, DateTime
 from sqlalchemy.sql import func
 
@@ -18,3 +19,32 @@ class Cnae(db.Model):
 
     def __repr__(self):
         return '<Cnae %r>' % self.cnae
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'created': self.created.isoformat(),
+            'updated': self.updated.isoformat(),            
+            'cnae': self.cnae,
+            'nm_cnae': self.nm_cnae
+        }
+    
+    def get_table_structure( self ):
+        # Usando a função inspect do SQLAlchemy para obter informações sobre a tabela
+        print( self )
+        mapper = inspect(self)
+        structure = {
+            'table_name': self.__tablename__,
+            'columns': {}
+        }
+
+        for column in mapper.columns:
+            structure['columns'][column.name] = {
+                'type': str(column.type),
+                'primary_key': column.primary_key,
+                'nullable': column.nullable,
+                'unique': column.unique,
+                'default': column.default,
+            }
+
+        return structure    

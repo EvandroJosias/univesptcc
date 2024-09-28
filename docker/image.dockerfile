@@ -1,5 +1,11 @@
 FROM python:3-alpine3.15
 
+RUN apk add --no-cache \
+    cmake \
+    build-base \
+    boost-dev \
+    snappy-dev
+
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
