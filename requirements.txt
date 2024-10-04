@@ -1,3 +1,5 @@
+pyarrow
+pandas
 flask
 flask_sqlalchemy
 sqlalchemy
@@ -6,5 +8,5 @@ pytest
 pyjwt
 requests
 bs4
-tdqm
 dask[dataframe]
+tqdm

@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from bs4 import BeautifulSoup as bs
 from sqlalchemy.inspection import inspect
+from tqdm.notebook import trange
 
 from src.database.cnae import Cnae
 from src.database.empresa import Empresa
@@ -18,7 +19,7 @@ import requests, os, re, json, zipfile
 import dask.dataframe as dd
 
 
-urlbase = "https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/2024-09/"
+urlbase = "https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/2024-08/"
 dirpath = "downloads/" #a path precisa existir
 
 '''
@@ -156,7 +157,13 @@ def get_table_structure( cls ):
     }
     for column in mapper.columns:
         if(column.name not in ['id','created','updated']):
-            structure['columns'][column.name] = str(column.type)
+            match str(column.type)[:7]:
+                case 'INTEGER':
+                    structure['columns'][column.name] = 'int'
+                case 'VARCHAR':
+                    structure['columns'][column.name] = 'str'
+                case _:
+                    structure['columns'][column.name] = str(column.type)    
     return structure    
 
 class Aquisition():
@@ -208,7 +215,7 @@ class Aquisition():
         return json.dumps(urllist), 200
 
     def loadData(self):
-        local=dirpath+'cnaes.zip'
+        local=dirpath+'Cnaes.zip'
         dcol = {"CD_MUNICIPIO": "int","MUNICIPIO":"str"}
         table='CNAE'
         jsonret = self.upload(local, table, dcol)
@@ -223,18 +230,23 @@ class Aquisition():
             case _:
                 return jsonify({'message': 'Tabela nao esta especificada '+table }), 400
         colunas = get_table_structure( tbl )
-        print(colunas['columns'])        
-        df = dd.read_csv(local, header=None, encoding='latin1', sep=";", decimal=",", names=colunas, dtype=colunas['columns'], blocksize=block)
 
+        # Excluindo a tabela se já existir
+        with db.engine.connect() as connection:
+            connection.execute(f"DROP TABLE IF EXISTS \"{table}\"")
 
-        tbl.__table__.drop(checkfirst=True)
-     
-        colunas=list(dcol.keys())
-        with engine.connect() as c:
-            c.execute(sa.text("DROP TABLE IF EXISTS \"" + table + "\""))
-            block='default' if local.find('.zip') < 0 else None
-            df = dd.read_csv(local, header=None, encoding='latin1', sep=";", decimal=",", names=colunas, dtype=dcol, blocksize=block)
+        # Lendo o arquivo CSV
+        block = 'default' if local.find('.zip') < 0 else None
+        df = dd.read_csv(local, header=None, encoding='latin1', sep=";", decimal=",", names=colunas, dtype=dcol, blocksize=block)
+
+        # Inserindo dados na tabela
         for n in trange(df.npartitions, desc=table):
-            df.get_partition(n).compute().to_sql( name=table, con=engine, if_exists= 'append', chunksize=1000, index=False)
-        with engine.connect() as c:
-            c.execute(sa.text("CREATE INDEX IF NOT EXISTS idx_" + table + " ON \"" + table + "\" (\"" + df.columns[0] + "\")"))    
+            # Computando a partição e inserindo os dados
+            partition_df = df.get_partition(n).compute()
+            partition_df.to_sql(name=table, con=db.engine, if_exists='append', chunksize=1000, index=False)
+
+        # Criando um índice na tabela
+        with db.engine.connect() as connection:
+            connection.execute(f"CREATE INDEX IF NOT EXISTS idx_{table} ON \"{table}\" (\"{df.columns[0]}\"))")
+
+        return jsonify({'message': 'Tabela importada com sucesso'+table }), 200

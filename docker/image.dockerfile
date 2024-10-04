@@ -1,10 +1,12 @@
-FROM python:3-alpine3.15
+FROM python:3.10-slim
 
-RUN apk add --no-cache \
-    cmake \
-    build-base \
-    boost-dev \
-    snappy-dev
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libboost-all-dev \
+    libsnappy-dev \
+    libopenblas-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
