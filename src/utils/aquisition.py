@@ -1,7 +1,6 @@
 from flask import request, jsonify
 from bs4 import BeautifulSoup as bs
 from sqlalchemy.inspection import inspect
-from tqdm.notebook import trange
 
 from src.database.cnae import Cnae
 from src.database.empresa import Empresa
@@ -232,15 +231,15 @@ class Aquisition():
         colunas = get_table_structure( tbl )
 
         # Excluindo a tabela se já existir
-        with db.engine.connect() as connection:
-            connection.execute(f"DROP TABLE IF EXISTS \"{table}\"")
+ #       with db.engine.connect() as connection:
+ #           connection.execute(f"DROP TABLE IF EXISTS {table.lower()}")
 
         # Lendo o arquivo CSV
         block = 'default' if local.find('.zip') < 0 else None
         df = dd.read_csv(local, header=None, encoding='latin1', sep=";", decimal=",", names=colunas, dtype=dcol, blocksize=block)
 
         # Inserindo dados na tabela
-        for n in trange(df.npartitions, desc=table):
+        for n in range( df.npartitions ):
             # Computando a partição e inserindo os dados
             partition_df = df.get_partition(n).compute()
             partition_df.to_sql(name=table, con=db.engine, if_exists='append', chunksize=1000, index=False)
@@ -249,4 +248,4 @@ class Aquisition():
         with db.engine.connect() as connection:
             connection.execute(f"CREATE INDEX IF NOT EXISTS idx_{table} ON \"{table}\" (\"{df.columns[0]}\"))")
 
-        return jsonify({'message': 'Tabela importada com sucesso'+table }), 200
+        return jsonify({'message': 'Tabela importada com sucesso {table}' }), 200

@@ -14,6 +14,14 @@ class UserController():
     def __init__(self) -> None:        
         self.setEndpoints()
 
+    def setEndpoints(self) -> None:
+        app.add_url_rule('/api/userregister', view_func=self.create, methods=['POST'])
+        app.add_url_rule('/api/userbyname', view_func=self.read, methods=['GET'])
+        app.add_url_rule('/api/allusers', view_func=self.readall, methods=['GET'])
+        app.add_url_rule('/api/user/<int:user_id>', view_func=self.update, methods=['PUT'])
+        app.add_url_rule('/api/user/<int:user_id>', view_func=self.delete, methods=['DELETE'])
+        app.add_url_rule('/api/login', view_func=self.userlogin, methods=['POST'])    
+
     def create(self):
         data = request.get_json()
         passwd = generate_password_hash(data['password'])
@@ -73,10 +81,4 @@ class UserController():
             return jsonify({"token": token}),  200
         return jsonify({"message":"Invalid username or password"}), 401
     
-    def setEndpoints(self) -> None:
-        app.add_url_rule('/api/userregister', view_func=self.create, methods=['POST'])
-        app.add_url_rule('/api/userbyname', view_func=self.read, methods=['GET'])
-        app.add_url_rule('/api/allusers', view_func=self.readall, methods=['GET'])
-        app.add_url_rule('/api/user/<int:user_id>', view_func=self.update, methods=['PUT'])
-        app.add_url_rule('/api/user/<int:user_id>', view_func=self.delete, methods=['DELETE'])
-        app.add_url_rule('/api/login', view_func=self.userlogin, methods=['POST'])        
+    
