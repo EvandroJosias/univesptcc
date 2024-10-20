@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Verifica se o cookie 'usuario' está presente
     let usuarioCookie = getCookie('usuario');
     if( usuarioCookie ) {
-        alert( 'Os cookies estao rodando. Valor do cookie: ' + usuarioCookie );
+       // alert( 'Os cookies estao rodando. Valor do cookie: ' + usuarioCookie );
     } else {
         windows.location.href='/login';
     }

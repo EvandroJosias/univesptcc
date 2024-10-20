@@ -1,3 +1,11 @@
+:root {
+    --cor-principal: #2c3e50;
+    --cor-menu: rgb(24, 139, 233);
+    --cor-texto:  #f0f0f0;
+    --cor-botao: brown;
+    --heightbox: 40px;
+}
+
 * {
     margin: 0 auto;
     padding: 0;
@@ -17,10 +25,28 @@ body {
 }
 
 h1 {
-    border: 2px #eee solid;
-    color: #2c3e50;
-    text-align: center;
+    color: var(--cor-texto);
+    text-align: left;
     padding: 10px;
+}
+
+h2 {
+    color: var(--cor-texto);
+    text-align: left;
+    padding: 10px;
+}
+
+label {
+    color: var(--cor-texto);
+}
+
+input {
+    height: var(--heightbox);
+}
+
+button {
+    height: var(--heightbox);
+    background-color: var(--cor-botao);
 }
 
 form {
@@ -28,16 +54,28 @@ form {
 }
 
 label, input, button {
+    font-size: 20px;
     display: block;
     margin: 10px 0;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+#hdl {
+   justify-content: space-between;
 }
 
 #menu-h{
     background-color: rgb(37, 37, 39);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
 }
 
 #menu-h ul {
-    max-width: 800px;
+/*    max-width: 800px; */
     list-style: none;
     padding: 0;
 }
@@ -47,7 +85,7 @@ label, input, button {
 }
 
 #menu-h ul li a {
-    color: #FFF;
+    color: var(--cor-texto);
     padding: 20px;
     display: inline-block;
     text-decoration: none;
@@ -55,10 +93,30 @@ label, input, button {
 }
 
 #menu-h ul li a:hover {
-    background-color: rgb(24, 139, 233);
+    background-color: var(--cor-menu);
 }
 
 #menu-h ul li:last-child a {
+/*    float: left; */
+    background-color: var(--cor-menu);
+}
+
+#btnleft {
+    float: left;
+}
+
+#btnright {
     float: right;
-    background-color: rgb(24, 139, 233);
+}
+
+#dlgmodal {
+    background-color: var(--cor-principal);
+    border-radius: 20px;
+    padding: 10px;    
+}
+
+#btncenter {
+    width: 100px;
+    height: var(--heightbox);
+    justify-content: center;
 }

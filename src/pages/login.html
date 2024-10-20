@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Login no Sistema {% endblock %}</h1>
+<div id="dlgmodal">
+    <h1>Login no Sistema</h1>
+    <h2>* Autorize seu acesso com o e-mail e senha</h2>
 
-<form method="post">
-    <div class="form-group">
-        <label for="title">Usuario</label>
-        <input type="text" name="usuario"
-               placeholder="Usuário" class="form-control"
-               value="{{ request.form['title'] }}"></input>
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input name="password" placeholder="Password"
-                  class="form-control">{{ request.form['content'] }}</input>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Confirma</button>
-    </div>
-</form>
+    <form method="post">
+        <div class="form-group">
+            <label for="title">e-mail</label>
+            <input type="text" name="usuario"
+                placeholder="e-mail" class="form-control"
+                value="{{ request.form['title'] }}"></input>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input name="password" placeholder="senha"
+                    class="form-control">{{ request.form['content'] }}</input>
+        </div>
+        <br><br>
+        <div id="btncenter">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

@@ -10,6 +10,13 @@ class MainController():
     def __init__(self) -> None:
         self.setEndpoints()
 
+    def setEndpoints(self) -> None:
+        app.add_url_rule('/', view_func=self.main, methods=['GET','POST'])
+        app.add_url_rule('/login', view_func=self.login, methods=['GET','POST'])
+        app.add_url_rule('/busca', view_func=self.busca, methods=['GET'])
+        app.add_url_rule('/sobre', view_func=self.sobre, methods=['GET'])
+        app.add_url_rule('/ajuda', view_func=self.ajuda, methods=['GET'])
+
     def main(self):
         if request.method == 'POST':
             # print("post do main")
@@ -70,9 +77,14 @@ class MainController():
                 return response                
             else:
                 return "Usuário ou senha incorretos."
-        print("nao e um post")
-        return render_template('login.html')
+        else:
+            return render_template('login.html')
 
-    def setEndpoints(self) -> None:
-        app.add_url_rule('/', view_func=self.main, methods=['GET','POST'])
-        #app.add_url_rule('/login', view_func=self.login, methods=['POST' ])
+    def busca(self):
+        return render_template('busca.html')
+
+    def ajuda(self):
+        return render_template('ajuda.html')
+
+    def sobre(self):
+        return render_template('sobre.html')
