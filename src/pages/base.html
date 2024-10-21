@@ -8,24 +8,25 @@
         <title>{% block title %} {% endblock %}</title>
     </head>
     <body>
-        <header id="hdl">
-            <div>TCC Univesp</div>
-            <nav id="menu-h">
-                <ul>
+        <header class="header">
+            <div class="divlogo">
+                <h1>TCC Univesp</h1>
+            </div>
+            <div class="menu">
+                <ul class="item">
                     <li><a href="/">Pagina Inicial</a> </li>
         
                     <li><a href="sobre">Sobre Nos</a></li>
                     
                     <li><a href="ajuda">Ajuda</a></li>
                     
-                    <li><a href="login">Acessar</a></li>
+                    <li class="login"><a href="login">Acessar</a></li>
                 </ul>
-            </nav>
+            </div>  
         </header>
         <div class="container">
             {% block content %} {% endblock %}
         </div>
-
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+       <!-- <script src="{{ url_for('static', filename='scripts.js') }}"></script> -->
     </body>
 </html>
