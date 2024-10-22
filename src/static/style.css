@@ -1,11 +1,14 @@
+/* variaveis principais */
 :root {
     --cor-principal: #2c3e50;
     --cor-menu: rgb(24, 139, 233);
+    --cor-background:  #e7ecdf;
     --cor-texto:  #ffff;
     --cor-botao: brown;
     --heightbox: 40px;
 }
 
+/* estilos padrao para todos os aquivos */
 * {
     margin: 0;
     padding: 0;
@@ -15,11 +18,12 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: var(--cor-background);
+    color: var(--cor-texto);
     justify-content: center;
 }
 
+/* estilos para o aquivo base.html */
 .header{
     width:100%;
     height:6vh;
@@ -72,9 +76,51 @@ body {
     color:var(--cor-texto)
 }
 
+
+/* estilo para o aquivo login.html */
 .divlogin {
-    margin-top: 10%;
-    height: 40%;
+    margin-top:6%;
+    padding: 10px;
+    height:70%;
+    width:25%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 20px;
     background-color: var(--cor-principal);
+    gap:10px;
+}
+.login-info{
+    width: 100%;
+    height:30%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding-left: 10px;
+    margin-top:5%;
+}
+.login-info,h3{
+    font-weight: 400;
+    margin-left:4%;
+}
+.bola:before{
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 25px;
+    left:38.5%;
+    border-radius: 50%;
+    background-color:var(--cor-botao);
+}
+
+.lbltextos {
+    margin: 5px;
+    width: 100%;
+    color: var(--cor-texto);
+}
+
+.btncenter {
+    width: 100px;
+    height: var(--heightbox);
+    justify-content: center;
 }
