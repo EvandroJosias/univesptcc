@@ -6,22 +6,22 @@
         <h1>Acessar</h1><br>
         <h3 class="bola">Autorize seu acesso com o e-mail e senha</h3><br>
     </div>
-    <form method="post">
+    <form method="post" class="forms">
         <div class="form-group">
-            <label for="title">e-mail</label><br>
-            <input type="text" name="usuario"
+            <label for="title" class="text-email">Email</label><br>
+            <input class="input-email" type="text" name="usuario"
                 placeholder="e-mail" class="form-control"
                 value="{{ request.form['title'] }}"></input>
         </div>
         <br>
         <div class="form-group">
-            <label for="password">Senha</label><br>
-            <input name="password" placeholder="senha"
+            <label for="password" class="text-password">Senha</label><br>
+            <input class="input-password"name="password" placeholder="senha"
                     class="form-control">{{ request.form['content'] }}</input>
         </div>
         <br><br>
         <div class="btncenter">
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button class="button-send"type="submit" class="btn btn-primary">Enviar</button>
         </div>
     </form>
 </div>

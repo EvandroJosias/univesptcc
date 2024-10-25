@@ -2,7 +2,7 @@
 :root {
     --cor-principal: #2c3e50;
     --cor-menu: rgb(24, 139, 233);
-    --cor-background:  #e7ecdf;
+    --cor-background:#ffff;
     --cor-texto:  #ffff;
     --cor-botao: brown;
     --heightbox: 40px;
@@ -33,7 +33,25 @@ body {
     background-color:var(--cor-principal);
 
 }
-
+.login{
+    color:white;
+    width:12%;
+    transition: all 0.3s;
+    height:38px;
+    border-radius:10px;
+    background:var(--cor-botao);
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid var(--cor-botao);
+    box-shadow: 6px 6px 12px var(--cor-principal), -6px -6px 12px,var(--cor-principal);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+.login:hover{
+    transform: translateY(-0.2rem);
+}
 .container {
     width: 100%;
     height: 94vh;
@@ -75,6 +93,9 @@ body {
     text-decoration:none;
     color:var(--cor-texto)
 }
+.item-meu{
+    
+}
 
 
 /* estilo para o aquivo login.html */
@@ -88,27 +109,30 @@ body {
     align-items: center;
     border-radius: 20px;
     background-color: var(--cor-principal);
-    gap:10px;
+    gap: 10px;
 }
 .login-info{
     width: 100%;
-    height:30%;
+    height:20%;
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     padding-left: 10px;
     margin-top:5%;
 }
-.login-info,h3{
+.bola{
     font-weight: 400;
-    margin-left:4%;
+    padding-top:1px;
+    margin-left:7%;
 }
 .bola:before{
     position: absolute;
     content: "";
-    height: 25px;
-    width: 25px;
+    height: 22px;
+    width: 22px;
     left:38.5%;
+    padding-bottom:2px;
+    padding-left:3px;
     border-radius: 50%;
     background-color:var(--cor-botao);
 }
@@ -124,3 +148,176 @@ body {
     height: var(--heightbox);
     justify-content: center;
 }
+.forms{
+    width:100%;
+    height:80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+.form-group{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:4%;
+    height:30%;
+}
+.text-email{
+    font-size:1.3rem;
+    font-weight: 500;
+
+}
+.input-email{
+    width:80%;
+    background-color: var(--cor-background);
+    border:none;
+    border-radius:10px;
+    height:39%;
+    outline:none;
+    transition:0.2s ease-in-out;
+    box-shadow: 0px 10px 20px -18px;
+    color: black;
+    padding-inline-start:20px;
+}
+.input-email:focus{
+        border-bottom: 4px solid var(--cor-botao);
+        border-radius: 4px 4px 2px 2px;
+ 
+}
+.input-email:hover{
+    outline: 1px solid lightgrey;
+}
+
+.text-password{
+    font-size:1.3rem;
+    font-weight: 500;
+
+}
+.input-password{
+    width:80%;
+    background-color: var(--cor-background);
+    border:none;
+    transition:0.2s ease-in-out;
+    box-shadow: 0px 10px 20px -18px;
+    border-radius:10px;
+    height:39%;
+    color: black;
+    padding-inline-start:20px;
+}
+
+.input-password:focus{
+    border-bottom: 4px solid var(--cor-botao);
+    border-radius: 4px 4px 2px 2px;
+
+}
+.input-password:hover{
+outline: 1px solid lightgrey;
+}
+
+.btncenter{
+    width:100%;
+    height:30%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.button-send{
+    color:white;
+    padding: 0.7em 1.7em;
+    font-size: 18px;
+    border-radius: 0.5em;
+    width:60%;
+    transition: all 0.3s;
+    height:40%;
+    background:var(--cor-botao);
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid var(--cor-botao);
+    box-shadow: 6px 6px 12px var(--cor-principal), -6px -6px 12px,var(--cor-principal);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.button-send:hover{
+transform: translateY(-0.2em);
+    
+}
+
+/* tela de sobre nos  */
+.masters{
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content:center;
+}
+.info-part{
+    width:50%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding-top:4%;
+    padding-left:5%;
+    gap:4%;
+
+}
+.title-about{
+    color:var(--cor-principal);
+    font-size:3.0rem;
+    
+}
+.info-p{
+    color: black;
+    width:80%;
+    font-size:1.3rem;
+    text-align:left;
+    border-radius:10px;
+}
+.images-part{
+    width:50%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card-grid{
+    padding-left:25%;
+    padding-top:10%;
+    padding-right:5%;
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.person-info {
+    width:40%;
+    display:flex;
+    gap:15px;
+    height:16%;
+    background: #ffff;
+    box-shadow: 0 1px 25px rgba(0,0,0,0.2);
+    transform: translate(-50%, -50%);
+    padding: 10px 10px;
+  }
+  
+  .card_load {
+    width:40%;
+    height:99%;
+    background-color:var(--cor-principal);
+    border-radius: 50%;
+  }
+  
+  .card_load_extreme_descripion {
+    width:55%;
+    height:60%;
+    display:flex;
+    align-items: center;
+    color:white;
+    padding-inline-start:10px;
+    margin-top:5%;
+    border-radius: 5px;
+    background-color: var(--cor-principal);
+  }
+  
