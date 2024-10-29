@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="master-buscar">
+    <div class="modal-search">
+        <h2 class="title-search">Buscar</h2>
+        <form action="" method="post" class="modal-input">
+            <label for="cpf">CPF</label>
+           <input type="text" placeholder="CPF" name="cpf">
+           <div>or</div>
+           <label for="cnpj">CNPJ</label>
+           <input type="text" name="cpj" id="" placeholder="CNPJ">
+           <input type="button" value="Enviar">
+        </form>
+    </div>
+    <div class="modal-result">
+        <div class="frame">
 
-<h1>pagina de busca</h1>
-
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,10 +1,10 @@
 /* variaveis principais */
 :root {
-    --cor-principal: #2c3e50;
+    --cor-principal:#0B3954;
     --cor-menu: rgb(24, 139, 233);
     --cor-background:#ffff;
     --cor-texto:  #ffff;
-    --cor-botao: brown;
+    --cor-botao:#522A27;
     --heightbox: 40px;
 }
 
@@ -322,12 +322,78 @@ transform: translateY(-0.2em);
   }
   
 /* screen of helped */
-.maain-ajuda{
+.master-ajuda{
     width:100%;
     height:100%;
     display: flex;
+    justify-content: center;
+}
+.ajuda-info{
+    width:50%;
+    height:100%;
+    display: flex;
+    gap:6%;
+    padding-left:5%;
+    padding-top:3%;
     flex-direction: column;
+
+}
+.title-ajuda{
+    color:var(--cor-principal);
+    font-size:2.9rem;
+}
+.p-ajuda{
+    color:black;
+    width:65%;
+    font-size:1.5rem;
+}
+.ajuda-imagens{
+    width:50%;
+    height:100%;
+    display:flex ;
+    justify-content: center;
     align-items: center;
+    gap:25%;
+    
+}
+
+/* screen of search */
+.master-buscar{
+    width:100%;
+    height:100%;
+    display:flex;
     justify-content:center;
-    background-color: blue;
+}
+.modal-search{
+    width:50%;
+    height:100%;
+    display: flex;
+    padding-top:3%;
+    padding-left:3%;
+    flex-direction: column;
+    align-items:start;
+}
+.modal-result{
+    width:50%;
+    height:100%;
+    padding:0.5%;
+    align-items:flex-end;
+}
+.frame{
+    width:100%;
+    height:100%;
+    background-color: #0B3954;
+}
+.title-search{
+    font-size:2.0rem;
+    color:var(--cor-principal);
+}
+.modal-input{
+    height:98%;
+    width:100%;
+    padding-top:10%;
+    padding-left:6%;
+    display: flex;
+    flex-direction:column;
+    gap:6%;
 }
