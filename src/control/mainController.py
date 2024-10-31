@@ -57,7 +57,7 @@ class MainController():
             usuario = session.get('usuario','Visitante')
             cookie_usuario = request.cookies.get('usuario','Sem cookie')            
             #return render_template( 'login.html', usuario=usuario, cookie_usuario=cookie_usuario )
-            return render_template( 'login.html' )
+            return render_template( 'index.html' )
 
     def login(self):
         if request.method == 'POST':

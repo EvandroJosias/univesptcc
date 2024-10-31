@@ -369,7 +369,7 @@ transform: translateY(-0.2em);
     height:100%;
     display: flex;
     padding-top:3%;
-    padding-left:3%;
+    padding-left:6%;
     flex-direction: column;
     align-items:start;
 }
@@ -385,15 +385,109 @@ transform: translateY(-0.2em);
     background-color: #0B3954;
 }
 .title-search{
-    font-size:2.0rem;
+    font-size:2.3rem;
     color:var(--cor-principal);
 }
 .modal-input{
     height:98%;
     width:100%;
-    padding-top:10%;
-    padding-left:6%;
+    padding-top:3%;
     display: flex;
     flex-direction:column;
-    gap:6%;
+    gap:1%;
 }
+.title-search::before{
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left:4%;
+    top:13%;
+    padding-left:3px;
+    border-radius: 50%;
+    background-color:var(--cor-botao);
+}
+.form-group-search{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:4%;
+    height:30%;
+}
+.text-cpf{
+    color:var(--cor-principal);
+    font-size:1.3rem;
+    font-weight: 500;
+
+}
+.input-cpf{
+    width:60%;
+    background-color: var(--cor-botao);
+    border:none;
+    transition:0.2s ease-in-out;
+    box-shadow: 0px 10px 20px -18px;
+    border-radius:20px;
+    height:28%;
+    color:white;
+    padding-inline-start:20px;
+}
+.input-cpf::placeholder{
+    color: white;
+}
+
+.input-cpf:focus{
+    border-bottom: 4px solid var(--cor-principal);
+    border-radius: 4px 4px 2px 2px;
+
+}
+.input-cpf:hover{
+outline: 1px solid var(--cor-botao);
+}
+
+.btnsearch{
+    width:100%;
+    height:34%;
+    display: flex;
+    justify-content:start;
+    align-items: center;
+}
+.button-send{
+    margin-left:5%;
+    color:white;
+    font-size:20px;
+    border-radius: 0.5em;
+    width:40%;
+    transition: all 0.3s;
+    height:22%;
+    background:var(--cor-botao);
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid var(--cor-botao);
+    box-shadow: 6px 6px 12px var(--cor-principal), -6px -6px 12px,var(--cor-principal);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.button-send:hover{
+transform: translateY(-0.2em);
+    
+}
+.content-search {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    margin-left:8%;
+    font-weight: 700;
+    color: #0B3954;
+    font-size:2.0rem;
+    column-gap: 18px;
+    margin-top: 18px;
+  }
+  
+  .content-search span:nth-child(3),
+  .content-search span:nth-child(1) {
+    display: block;
+    width: 20%;
+    height: 3px;
+    border-radius:10%;
+    background-color:var(--cor-principal);
+  }

@@ -5,12 +5,22 @@
     <div class="modal-search">
         <h2 class="title-search">Buscar</h2>
         <form action="" method="post" class="modal-input">
-            <label for="cpf">CPF</label>
-           <input type="text" placeholder="CPF" name="cpf">
-           <div>or</div>
-           <label for="cnpj">CNPJ</label>
-           <input type="text" name="cpj" id="" placeholder="CNPJ">
-           <input type="button" value="Enviar">
+            <div class="form-group-search">
+                <label for="CPF" class="text-cpf">CPF</label><br>
+                <input class="input-cpf"name="CPF" placeholder="Digite um CPF"class="form-control">{{ request.form['content'] }}</input>
+            </div>
+            <div class="content-search">
+                <span></span>
+                <span>OR</span>
+                <span></span>
+              </div>
+            <div class="form-group-search">
+                <label for="CNPJ" class="text-cpf">CNPJ</label><br>
+                <input class="input-cpf"name="CNPJ" placeholder="Digite um CNPJ"class="form-control">{{ request.form['content'] }}</input>
+            </div>
+            <div class="btnsearch">
+                <button class="button-send"type="submit" class="btn btn-primary">Enviar</button>
+            </div>
         </form>
     </div>
     <div class="modal-result">
