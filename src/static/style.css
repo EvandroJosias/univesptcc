@@ -491,3 +491,28 @@ transform: translateY(-0.2em);
     border-radius:10%;
     background-color:var(--cor-principal);
   }
+  /* home */
+  .master-home{
+    color: black;
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content:center;
+  }
+  .divImage{
+    width:50%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .info-home{
+    width:50%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end;
+    padding-top:7%;
+    padding-right:5%;
+    gap:10%;
+  }
