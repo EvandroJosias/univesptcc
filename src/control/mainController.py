@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, session, make_response
+from flask import render_template, redirect, request, session, make_response, url_for
 from src.utils.authenticate import check_password_hash
 from src.database.user import User
 from src import app
@@ -80,7 +80,7 @@ class MainController():
                 session['usuario'] = usuario
                 response = make_response( render_template('index.html', usuario=session['usuario']))
                 response.set_cookie( 'usuario', session['usuario'])
-                return render_template('busca.html')
+                return redirect(url_for('busca'))
             else:
                 return render_template('login.html')
         else:
