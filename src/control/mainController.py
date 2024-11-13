@@ -4,6 +4,7 @@ from src.database.user import User
 from src import app
 
 import os
+import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -20,7 +21,7 @@ class MainController():
         app.add_url_rule('/busca', view_func=self.busca, methods=['GET'])
         app.add_url_rule('/sobre', view_func=self.sobre, methods=['GET'])
         app.add_url_rule('/ajuda', view_func=self.ajuda, methods=['GET'])
-        app.add_url_rule('/chat', view_func=self.chat, methods=['GET'])
+        app.add_url_rule('/busca', view_func=self.chat, methods=['POST'])
 
     def main(self):
         if request.method == 'POST':
@@ -95,26 +96,59 @@ class MainController():
         return render_template('sobre.html')
     
     def chat(self):
+        # ler o arquivo json com os dados
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        app_path = os.path.dirname( base_dir )
+
+        pesquisado = request.form['SOCIO']
+        if pesquisado == "ANDRE AUGUSTO FERREIRA FONTES":
+            arquivo_json = app_path+"/static/DF1.json" 
+        elif pesquisado == "ALEXANDRE TADEU DA COSTA":
+            arquivo_json = app_path+"/static/DF2.json" 
+        elif pesquisado == "ARTHUR QUEIROGA BANDEIRA DE AGUIAR":
+            arquivo_json = app_path+"/static/DF3.json" 
+        else:
+            arquivo_json = app_path+"/static/DF0.json" 
+        
+        try:
+            with open(arquivo_json, 'r', encoding='utf-8') as f:
+                dados = json.load(f)
+        except json.JSONDecodeError:
+            print("Erro ao decodificar o arquivo JSON.")
+        except FileNotFoundError:
+            print(f"O arquivo {arquivo_json} não foi encontrado.")
+
+
         # Criar o grafo societário
         G = nx.DiGraph()
 
-        # Adicionando nós (empresas)
-        G.add_node("ANDRE AUGUSTO FERREIRA FONTES")
-        G.add_node("CNPJ 21450668\nSOLARESS ECOVILASS SPE LTDA")
-        G.add_node("CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")
-        G.add_node("ROMEU FONTES JUNIOR")
+        for entidade in dados:
+            socio   = entidade["NOME_OU_RAZAO_SOCIAL"]
+            empresa = "CNPJ "+str(entidade["CNPJ_BASICO"])+"\n"+entidade["RAZAO_SOCIAL"]
+            
+            # Adicionando nós (empresas)
+            if not G.has_node( socio ):  # Verifica se o nó já existe
+               G.add_node( socio, tipo='socio' )
+            if not G.has_node( empresa ):  # Verifica se o nó já existe
+               G.add_node( empresa, tipo='empresa' )   
 
-        # Adicionando arestas (relações societárias)
-        G.add_edge("ANDRE AUGUSTO FERREIRA FONTES", "CNPJ 21450668\nSOLARESS ECOVILASS SPE LTDA")  # Empresa A possui participação na Empresa B
-        G.add_edge("ANDRE AUGUSTO FERREIRA FONTES", "CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")  # Empresa A possui participação na Empresa C
-        G.add_edge("ROMEU FONTES JUNIOR", "CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")  # Empresa B possui participação na Empresa D
+            # Adicionando arestas (relações societárias)
+            G.add_edge( socio, empresa)  
+
+        # Gerar a cor dos nós com base no atributo 'tipo'
+        node_colors = []
+        for node in G.nodes():
+            if G.nodes[node]['tipo'] == 'socio':
+                node_colors.append('lightgreen')  # Cor para os sócios
+            else:
+                node_colors.append('lightblue')  # Cor para as empresas
 
         # Gerar e salvar a imagem do grafo
         image_path = os.path.join(app.static_folder, 'graph.png')
         plt.figure(figsize=(8, 8))
-        nx.draw(G, with_labels=True, node_color='lightblue', node_size=3000, font_size=10, font_weight='bold', edge_color='gray')
+        nx.draw(G, with_labels=True, node_color=node_colors, node_size=2000, font_size=6, font_weight='bold', edge_color='gray')
         plt.savefig(image_path)
         plt.close()
 
         # Renderizar o template com o caminho da imagem
-        return render_template('chat.html', graph_image='graph.png')
+        return render_template('busca.html', graph_image='graph.png',  dados=dados )

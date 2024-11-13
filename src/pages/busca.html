@@ -6,27 +6,49 @@
         <h2 class="title-search">Buscar</h2>
         <form action="" method="post" class="modal-input">
             <div class="form-group-search">
-                <label for="CPF" class="text-cpf">CPF</label><br>
-                <input class="input-cpf"name="CPF" placeholder="Digite um CPF"class="form-control">{{ request.form['content'] }}</input>
-            </div>
-            <div class="content-search">
-                <span></span>
-                <span>OR</span>
-                <span></span>
-              </div>
-            <div class="form-group-search">
-                <label for="CNPJ" class="text-cpf">CNPJ</label><br>
-                <input class="input-cpf"name="CNPJ" placeholder="Digite um CNPJ"class="form-control">{{ request.form['content'] }}</input>
+                <label for="CPF" class="text-cpf">Socio pesquisado</label><br>
+                <input class="input-cpf" name="SOCIO" placeholder="Digite o nome de um socio para pesquisa"class="form-control">{{ request.form['content'] }}</input>
             </div>
             <div class="btnsearch">
                 <button class="button-send1"type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </form>
+        <div>
+            <h1>Tabela de Dados</h1>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Nivel da Busca</th>
+                            <th>CNPJ Basico</th>
+                            <th>Razao Social</th>
+                            <th>Tipo Socio</th>
+                            <th>Nome ou Razao do Socio</th>
+                            <th>CPF ou CNPF do Socio</th>
+                            <th>Qualificação do Socio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Iterando sobre os dados passados do Flask -->
+                        {% for pessoa in dados %}
+                            <tr>
+                                <td>{{ pessoa.L}}</td>
+                                <td>{{ pessoa.CNPJ_BASICO }}</td>
+                                <td>{{ pessoa.RAZAO_SOCIAL }}</td>
+                                <td>{{ pessoa.TIPO_SOCIO }}</td>
+                                <td>{{ pessoa.NOME_OU_RAZAO_SOCIAL }}</td>
+                                <td>{{ pessoa.CNPJ_CPF }}</td>
+                                <td>{{ pessoa.NM_QUALS }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="modal-result">
         <div class="frame">
-
-            
+            <img src="{{ url_for('static', filename=graph_image) }}" alt="Grafo Societário">
         </div>
     </div>
 </div>
