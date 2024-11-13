@@ -99,15 +99,15 @@ class MainController():
         G = nx.DiGraph()
 
         # Adicionando nós (empresas)
-        G.add_node("Empresa A")
-        G.add_node("Empresa B")
-        G.add_node("Empresa C")
-        G.add_node("Empresa D")
+        G.add_node("ANDRE AUGUSTO FERREIRA FONTES")
+        G.add_node("CNPJ 21450668\nSOLARESS ECOVILASS SPE LTDA")
+        G.add_node("CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")
+        G.add_node("ROMEU FONTES JUNIOR")
 
         # Adicionando arestas (relações societárias)
-        G.add_edge("Empresa A", "Empresa B")  # Empresa A possui participação na Empresa B
-        G.add_edge("Empresa A", "Empresa C")  # Empresa A possui participação na Empresa C
-        G.add_edge("Empresa B", "Empresa D")  # Empresa B possui participação na Empresa D
+        G.add_edge("ANDRE AUGUSTO FERREIRA FONTES", "CNPJ 21450668\nSOLARESS ECOVILASS SPE LTDA")  # Empresa A possui participação na Empresa B
+        G.add_edge("ANDRE AUGUSTO FERREIRA FONTES", "CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")  # Empresa A possui participação na Empresa C
+        G.add_edge("ROMEU FONTES JUNIOR", "CNPJ 6926251\nDHOMIR IND E COM DE ARTEFATOS DE CIMENTOS LTDA")  # Empresa B possui participação na Empresa D
 
         # Gerar e salvar a imagem do grafo
         image_path = os.path.join(app.static_folder, 'graph.png')
