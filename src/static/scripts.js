@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    // console.log("JavaScript carregado e funcionando");
+    console.log("JavaScript carregado e funcionando");
 
-    // // Verifica se o cookie 'usuario' está presente
-    // let usuarioCookie = getCookie('usuario');
-    // if( usuarioCookie ) {
-    //    // alert( 'Os cookies estao rodando. Valor do cookie: ' + usuarioCookie );
-    // } else {
-    //     windows.location.href='/login';
-    // }
+    // Verifica se o cookie 'usuario' está presente
+    let usuarioCookie = getCookie('usuario');
+    if( usuarioCookie ) {
+       // alert( 'Os cookies estao rodando. Valor do cookie: ' + usuarioCookie );
+    } else {
+        windows.location.href='/busca';
+    }
 });
 
 

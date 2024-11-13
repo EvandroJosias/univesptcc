@@ -10,3 +10,5 @@ requests
 bs4
 dask[dataframe]
 tqdm
+networkx
+matplotlib.pyplot
